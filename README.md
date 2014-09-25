@@ -23,6 +23,7 @@ schedulers/RR.c // RR scheduler module //Módulo do escalonador RoundRobin
 schedulers/RR. // RR scheduler executable // Executável do escalonador RoundRobin
 
 schedulers/PL.c // PL scheduler module //Módulo do escalonador de Lista de prioridades
+
 schedulers/PL // PL scheduler executable //Executável do escalonador de Lista de prioridades
 
 tests/ // pasta de testes a serem realizados para testar o sistema
