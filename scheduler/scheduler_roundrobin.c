@@ -3,6 +3,7 @@
 #include <unistd.h>
 #include <signal.h>
 #define EVER ;;
+#define CPUTIME 10  //Mileseconds
 int main (int argc, char** argv)
 {
     int pid1;
