@@ -8,6 +8,8 @@ int main (int argc, char** argv)
 {
     int pid1;
     int pid2;
+	int cpuTime= CPUTIME*1000; 
+	
     
     //int i;
     if(argc!=1)
@@ -58,12 +60,12 @@ int main (int argc, char** argv)
         kill(pid2, SIGCONT);
             fflush(stdout);
             printf("Go %d pid2\n",pid2);
-        sleep(3);
+        usleep(cpuTime);
         kill(pid1, SIGCONT);
         kill(pid2, SIGINT);
             fflush(stdout);
             printf("Go %d pid1\n",pid1);
-        sleep(3);
+        usleep(cpuTime);
         }
         }
 }
