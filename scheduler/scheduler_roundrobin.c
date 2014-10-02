@@ -3,7 +3,7 @@
 #include <unistd.h>
 #include <signal.h>
 #define EVER ;;
-#define CPUTIME 200  //Mileseconds
+#define CPUTIME 2000  //Mileseconds
 int main (int argc, char** argv)
 {
     int pid1;
@@ -25,7 +25,7 @@ int main (int argc, char** argv)
        {
                       
                  printf("pid1 %d\n",getpid());
-                execl("lab4.2.a","lab4.2.a",NULL);
+                execl("ioBound","ioBound",NULL);
             
          
         }
@@ -41,7 +41,7 @@ int main (int argc, char** argv)
                       
                  
                 printf("pid2 %d\n",getpid());
-                execl("lab4.2.b","lab4.2.b",NULL);
+                execl("cpuBound1","cpuBound1",NULL);
          
         }
         else if (pid2 < 0)            // failed to fork
@@ -65,7 +65,7 @@ int main (int argc, char** argv)
 				    kill(pid1, SIGCONT);
 				    kill(pid2, SIGSTOP);
 				        //fflush(stdout);
-				        printf("Go %d pid1\n",pid1);
+				    printf("Go %d pid1\n",pid1);
 				    usleep(cpuTime);
         }
         }
