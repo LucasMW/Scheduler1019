@@ -3,7 +3,7 @@
 #include <unistd.h>
 #include <signal.h>
 #define EVER ;;
-#define CPUTIME 10  //Mileseconds
+#define CPUTIME 200  //Mileseconds
 int main (int argc, char** argv)
 {
     int pid1;
@@ -25,7 +25,7 @@ int main (int argc, char** argv)
        {
                       
                  printf("pid1 %d\n",getpid());
-                execl("lab4.2.a",NULL);
+                execl("lab4.2.a","lab4.2.a",NULL);
             
          
         }
@@ -41,31 +41,32 @@ int main (int argc, char** argv)
                       
                  
                 printf("pid2 %d\n",getpid());
-                execl("lab4.2.b",NULL);
+                execl("lab4.2.b","lab4.2.b",NULL);
          
         }
         else if (pid2 < 0)            // failed to fork
         {
             printf("Fork não deu certo!\n");
-            exit(1);
+            exit(2);
             // Throw exception
         }
         else if(pid1!=0 && pid2!=0)
-        {    printf("Parent pid %d\n",getpid());
-        //kill(pid1, SIGINT);
-        //kill(pid2, SIGINT);
-        for(EVER)
-        {
-        kill(pid1, SIGINT);
-        kill(pid2, SIGCONT);
-            fflush(stdout);
-            printf("Go %d pid2\n",pid2);
-        usleep(cpuTime);
-        kill(pid1, SIGCONT);
-        kill(pid2, SIGINT);
-            fflush(stdout);
-            printf("Go %d pid1\n",pid1);
-        usleep(cpuTime);
+        {    
+					printf("Parent pid %d\n",getpid());
+		      kill(pid1, SIGSTOP);
+		      kill(pid2, SIGSTOP);
+		      for(EVER)
+		      {
+				   	kill(pid1, SIGSTOP);
+				    kill(pid2, SIGCONT);
+				        //fflush(stdout);
+				    printf("Go %d pid2\n",pid2);
+				    usleep(cpuTime);
+				    kill(pid1, SIGCONT);
+				    kill(pid2, SIGSTOP);
+				        //fflush(stdout);
+				        printf("Go %d pid1\n",pid1);
+				    usleep(cpuTime);
         }
         }
 }
