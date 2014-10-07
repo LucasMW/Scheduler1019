@@ -1,10 +1,54 @@
 
 #include<stdio.h>
 #include<string.h>
+
+void ErrorMessage(int x);
+
+void InteractiveShell()
+{	char* cmdstr;
+
+	ErrorMessage(0);
+	while(1)	
+	{
+		scanf(stdin,&cmdstr);
+		printf("Entre fim para terminar");
+		if (strcmp(tolower(cmdstr),"fim")==0);
+			exit(0);
+		printf("Received %s\n",cmdstr);
+		
+	}
+	
+	
+	
+
+}
+void ErrorMessage(int x)
+{
+	switch(x)
+	{
+	default:
+		printf ("Shell espera parametros: \n\n");
+		printf("exec <nome_programa> prioridade=<numero de 1 a 7> , no 			caso de lista de prioridades\n");
+		printf("exec <nome_programa> tempoexec=<tempo em ms>, no caso de 			SJF\n");
+		printf("exec <nome_programa>, no caso de ROUND-ROBIN\n"); 
+		exit(01);
+	break;
+
+	
+	}
+}
 int main (int argc, char** argv)
 {
 	int i;
 	int schPid;
+	
+	if(argc==2)
+	{
+	 	if(strcmp(argv[1],"-i")==0)
+			InteractiveShell();
+		else
+			ErrorMessage(0);
+	}
 	if(argc<3) // 1 shell 2 exec 3 <nome_programa>
 	{
 		printf ("Shell espera parametros: \n\n");
@@ -25,7 +69,6 @@ int main (int argc, char** argv)
 			if(argc==3)
 			{ /* Call Round Robin */
 				printf("Calling RR\n");
-				
 			
 			
 			execl("scheduler/scheduler_roundrobin","scheduler/scheduler_roundrobin",argv[2],NULL);
