@@ -4,6 +4,7 @@
 int main (int argc, char** argv)
 {
 	int i;
+	int schPid;
 	if(argc<3) // 1 shell 2 exec 3 <nome_programa>
 	{
 		printf ("Shell espera parametros: \n\n");
@@ -23,7 +24,11 @@ int main (int argc, char** argv)
 		{	
 			if(argc==3)
 			{ /* Call Round Robin */
-			printf("Calling RR\n");
+				printf("Calling RR\n");
+				
+			
+			
+			execl("scheduler/scheduler_roundrobin","scheduler/scheduler_roundrobin",NULL);
 			return 0;
 			}
 			if(strncmp("tempoexec=",argv[3],10)==0);
