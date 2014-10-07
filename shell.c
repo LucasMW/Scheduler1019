@@ -28,7 +28,7 @@ int main (int argc, char** argv)
 				
 			
 			
-			execl("scheduler/scheduler_roundrobin","scheduler/scheduler_roundrobin",NULL);
+			execl("scheduler/scheduler_roundrobin","scheduler/scheduler_roundrobin",argv[2],NULL);
 			return 0;
 			}
 			if(strncmp("tempoexec=",argv[3],10)==0);

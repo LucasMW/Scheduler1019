@@ -14,7 +14,7 @@ int main (int argc, char** argv)
     //int i;
     if(argc!=1)
     {
-        printf("Esse programa executa apenas os programas pre-configurados\n");
+        printf("Parametro recebido %s\n",argv[1]);
         return 1;
     }
     printf( "Parent %d\n",getpid());
