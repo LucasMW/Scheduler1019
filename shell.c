@@ -56,10 +56,13 @@ void FileInterpreter(char* path)
 	FILE * input;
 	char** lines;
 	char* filestr;
+	char ** prognames;
+	int * exectimes;
 	char *p;
 	char c;
-	int i,tam,spaces;
-	char stropr[256];
+	int i,tam,spaces,j;
+	char stropr[2560];
+	char mode=0;
 	
 	input=fopen(path,"rt");
 	if(!input)
@@ -89,7 +92,79 @@ void FileInterpreter(char* path)
 	{	
 		printf("Linha%d: %s\n",i,lines[i]);
     }   
-     fclose (input);
+	printf("sd\n");
+     //fclose (input);
+
+	for(i=0,j=0;i<tam;i++)
+	{	
+		if(strncmp(lines[i],"exec",4)==0)
+		{	
+			printf("OK\n");
+			if(strstr(lines[i],"tempoexec="))
+			{	printf("SJF\n");
+				mode=1;
+			}
+			else if (strstr(lines[i],"prioridade="))
+			{	printf("Prioridade\n");
+				mode=2;
+			}
+			else
+			{	printf("RR\n");
+				mode=3;
+			}
+			
+		}
+		else
+		{
+			printf("Fail\n");
+			j++;
+		}
+		
+		
+		
+		
+    }  
+	if(j)
+			printf("entry corrupted"); 
+	prognames=(char**)malloc(sizeof(char*)*tam);
+	exectimes=(int*)malloc(sizeof(int)*tam);
+	printf("mode %d\n",mode);
+	switch(mode)
+	{
+		case 1:
+		for(i=0;i<tam;i++)
+		{
+			p=strstr(lines[i],"tempoexec=");
+			prognames[i]=(char*)malloc(strlen(lines[i]+strlen("exec ")));
+			
+			strncpy(prognames[i],lines[i]+strlen("exec "),p-(lines[i]+strlen("exec ")));
+			exectimes[i]=atoi(p+strlen("tempoexec="));
+			
+			
+		}
+		for(i=0;i<tam;i++)
+		{
+			printf("prog[%d]: %s\n",i,prognames[i]);
+		}
+		for(i=0;i<tam;i++)
+		{
+			printf("time[%d]: %d\n",i,exectimes[i]);
+		}
+		break;
+		case 2:
+		break;
+		case 3:
+		prognames[i]=(char*)malloc(strlen(lines[i]+strlen("exec ")));
+			
+			strcpy(prognames[i],lines[i]+strlen("exec "));
+			
+		break;
+		
+	}	
+	printf("shd\n");
+
+
+
 } 
 
 
