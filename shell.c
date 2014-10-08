@@ -59,11 +59,37 @@ void FileInterpreter(char* path)
 	char *p;
 	char c;
 	int i,tam,spaces;
-	filestr=getfilemsg(path);
-	for(p=filestr,i=0;*p;p++)
-		if(*p='\n')
-			i++;
+	char stropr[256];
 	
+	input=fopen(path,"rt");
+	if(!input)
+	{
+	printf("File Interpreter: File %s Not Found \n",path);
+		exit(02);
+	}
+	i=0;
+	while(fgets (stropr , 255 ,input) != NULL)
+	{	
+		printf("%s\nstrlen=%d",stropr,strlen(stropr));
+		i++;
+	}
+	tam=i;
+	lines=(char**)malloc(sizeof(char)*i+1);
+	rewind(input);
+	for(i=0; fgets (stropr , 255 ,input)!= NULL; i++)
+	{	
+		
+		stropr[strlen(stropr)-1]=0; //null
+		lines[i]=malloc(sizeof(char)*strlen(stropr)+1);
+		strcpy(lines[i],stropr); //copy to lines[i]
+		
+	}
+	printf("%d\n",tam);
+	for(i=0;i<tam;i++)
+	{	
+		printf("Linha%d: %s\n",i,lines[i]);
+    }   
+     fclose (input);
 } 
 
 
