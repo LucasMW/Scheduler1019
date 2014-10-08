@@ -150,6 +150,7 @@ void FileInterpreter(char* path)
 		{
 			printf("time[%d]: %d\n",i,exectimes[i]);
 		}
+		printf("CALL SJF\n");
 		break;
 		case 2:
 		break;
