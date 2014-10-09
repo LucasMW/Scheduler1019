@@ -31,13 +31,11 @@ int main(int argc, char** argv)
 int scheduler_SJF (int *execTime,char **path, int tam)
 {
 	int i,j;// contadores
-	
+	pids = (int*) malloc(tam*sizeof(int));
  
 	for (i=0;i<tam;i++)
 	{
 		
-		pids = (int*) malloc(tam*sizeof(int));
-
 		if(pids == NULL)
 		{
 			printf ("erro ao alocar - SJF");
@@ -63,7 +61,7 @@ int scheduler_SJF (int *execTime,char **path, int tam)
 	{
 		t_ini = (int)time(NULL);// gurda o tempo do inicio do processo 1
 
-		printf("Inicio do processo %d: %d\n",j,(int)time(NULL));// inicio do processo
+		printf("\nInicio do processo %d: %d\n",j,(int)time(NULL));// inicio do processo
 
 		kill(pids[j],SIGCONT);// inicia o processo com o menor tempo
 		waitpid(pids[j],NULL,0);//espera ele terminar
@@ -72,7 +70,7 @@ int scheduler_SJF (int *execTime,char **path, int tam)
 		printf("Fim do processo %d: %d\n",j,(int)time(NULL));
 		
 		turnaround = t_fim-t_ini;
-		printf ("turn around do processo %d é : %d",j,turnaround);
+		printf ("turn around do processo %d é : %d\n",j,turnaround);
 	}
 
 

@@ -26,12 +26,14 @@ int main (void)
 }
 void filhoHandler (int sinal)
 {
+	printf ("dentro do sigusr1");
 	pids[pos] = -1;
 	procFim++;
 }
 
 void alarmHandler (int sinal)
 {
+	printf ("dentro do alarm");
 	if(pids[pos] != -1)
 	{
 		kill(pids[pos],SIGSTOP);
@@ -40,19 +42,20 @@ void alarmHandler (int sinal)
 
 int scheduler_RR (char **path, int tam)
 {
+	int status;
     int cpuTime= CPUTIME*1000; 
     // ini da copia	
     int i,j;// contadores
+	int bol1;
 	
- 
-	for (i=0;i<tam;i++)
-	{
-		
-		pids = (int*) malloc(tam*sizeof(int));
+ 		pids = (int*) malloc(tam*sizeof(int));
 		t_ini = (int*) malloc(tam*sizeof(int));
 		t_fim = (int*) malloc(tam*sizeof(int));
 		turnaround = (int*) malloc(tam*sizeof(int));
 
+	for (i=0;i<tam;i++)
+	{
+		
 		if(pids == NULL)
 		{
 			printf ("erro ao alocar - RR");
@@ -67,9 +70,13 @@ int scheduler_RR (char **path, int tam)
 			printf ("entre o execv e o kill do processo %d\n",i);
 			execl(path[i],path[i],NULL);
 			
+			//kill(pids[i],SIGSTOP);
 			kill(pids[i],SIGSTOP);
+			bol1 = WIFSTOPPED(status);
+			printf ("ifstopped %d\n",bol1);
 			sleep(1);			
 		}
+		
 	}
 	
 	signal(SIGUSR1, filhoHandler);
@@ -83,17 +90,27 @@ int scheduler_RR (char **path, int tam)
 				continue;	
 			t_ini[pos] = (int)time(NULL);
 			kill(pids[pos],SIGCONT);
-			alarm(1);
-			sleep(1);
+			sleep(2);			
+			
+			if(WIFEXITED(status))
+			{
+				printf ("processo %d terminado\n",pos);
+				procFim++;
+				pids[pos]=-1;
+			}			
+			alarm(2);			
+			//kill(pids[pos],SIGSTOP);		
 			
 			printf ("dentro do loop RR - %d\n",pos);
 			t_fim[pos] = (int)time(NULL);
+			turnaround[pos] += (t_fim[pos]-t_ini[pos]);
+			
 		}
 	}
 
 	for(pos = 0 ; pos < tam ; pos++ )
 	{   
-   		turnaround[pos] = t_fim[pos]-t_ini[pos];
+   		
 		printf ("turn around do processo %d é : %d\n",pos,turnaround[pos]);
 	}
 }
