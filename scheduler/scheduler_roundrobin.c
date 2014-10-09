@@ -12,8 +12,9 @@ int scheduler_RR (char **path, int tam);
 int pos,procFim=0;// posiçao do processo corrente e o numero dos processo finalizados
 int *pids;
 int *t_ini,*t_fim,*turnaround;// variaveis para controle do tempo
+int z;
 
-int main (void)
+/*int main (void)
 {
 	char *Myargs[3];
 	Myargs[0]="process1";
@@ -23,7 +24,7 @@ int main (void)
 	int tam = 3;
 	
 	scheduler_RR (Myargs,tam);
-}
+}*/
 void filhoHandler (int sinal)
 {
 	printf ("dentro do sigusr1");
@@ -47,6 +48,7 @@ int scheduler_RR (char **path, int tam)
     // ini da copia	
     int i,j;// contadores
 	int bol1;
+	int result;
 	
  		pids = (int*) malloc(tam*sizeof(int));
 		t_ini = (int*) malloc(tam*sizeof(int));
@@ -71,16 +73,20 @@ int scheduler_RR (char **path, int tam)
 			execl(path[i],path[i],NULL);
 			
 			//kill(pids[i],SIGSTOP);
-			kill(pids[i],SIGSTOP);
-			bol1 = WIFSTOPPED(status);
-			printf ("ifstopped %d\n",bol1);
-			sleep(1);			
+			//kill(pids[i],SIGSTOP);
+			//bol1 = WIFSTOPPED(status);
+			//printf ("ifstopped %d\n",bol1);
+			//sleep(1);			
+			exit(1);
 		}
+		kill(pids[i],SIGSTOP);
+				
 		
 	}
-	
+			
 	signal(SIGUSR1, filhoHandler);
 	signal(SIGALRM, alarmHandler);
+
 	
 	while(procFim < tam)// enquanto o numero de processos que ja acabaram < que o numero de processos nao terminados
 	{
@@ -91,8 +97,9 @@ int scheduler_RR (char **path, int tam)
 			t_ini[pos] = (int)time(NULL);
 			kill(pids[pos],SIGCONT);
 			sleep(2);			
-			
-			if(WIFEXITED(status))
+			result = waitpid(pids[pos],&status,WNOHANG);
+			printf ("result e status %d %d\n",result,status);
+			if(result!=0)
 			{
 				printf ("processo %d terminado\n",pos);
 				procFim++;

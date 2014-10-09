@@ -3,16 +3,22 @@
 int main (void)
 {
 	int i,x;
-	for (i=0;i<10000000;i++)
+	int j,z,a;
+	printf ("inicio do processo 1\n");
+	for (z=1;z<10;z++)	
 	{
-		if(i%2==0||i%3==0)
-		{
-			x= x+i;
+		puts("Pedro");
+		for (a=1;a<100;a++)
+		{	
+		
+			for (j=1;j<1000;j++)	
+			{
+				for (i=1;i<10000;i++)
+				{
+					x= i*i*i*i;
+				}
+			}
 		}
-		else
-		{
-			x=x-i;
-		}	
 	}			
 	printf ("termino do processo 1\n");
 	return 1;

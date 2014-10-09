@@ -1,3 +1,3 @@
-exec process1 tempoexec=12
-exec process2 tempoexec=12
-exec process3 tempoexec=123
+exec scheduler/process1 tempoexec=12
+exec scheduler/process2 tempoexec=12
+exec scheduler/process3 tempoexec=123

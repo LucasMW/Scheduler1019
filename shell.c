@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "scheduler/scheduler_SJF.h"
+#include "scheduler/scheduler_roundrobin.h"
 #define DEFAULTFILELOCATION "entrada.txt"
 
 
@@ -152,14 +153,17 @@ void FileInterpreter(char* path)
 			printf("time[%d]: %d\n",i,exectimes[i]);
 		}
 		printf("CALL SJF\n");
-		scheduler_SJF (exectimes,prognames,tam);
+		scheduler_SJF(exectimes,prognames,tam);
 		break;
 		case 2:
 		break;
 		case 3:
+		for(i=0;i<tam;i++)
+		{
 		prognames[i]=(char*)malloc(strlen(lines[i]+strlen("exec ")));
-			
-			strcpy(prognames[i],lines[i]+strlen("exec "));
+		strcpy(prognames[i],lines[i]+strlen("exec "));
+		}
+		scheduler_RR(prognames,tam);
 			
 		break;
 		

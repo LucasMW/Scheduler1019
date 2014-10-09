@@ -1,2 +1,3 @@
-exec ls
-exec pwd
+exec scheduler/process1
+exec scheduler/process2
+exec scheduler/process3

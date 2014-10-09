@@ -4,10 +4,9 @@
 void main(void)
 {
 	double i,j,k,t;
-	puts("\n\nPROG2 COMECOU\n");
-	for(t=0 ; t<7 ; t++)
+	puts("\n\nPROG3 COMECOU\n");
+	for(t=0 ; t<10 ; t++)
 	{
-		puts("EU\tvez %d",t*10);
 		for(k=0 ; k<2000 ; k++)
 		{
 			for(j=0 ; j<9000 ; j++)
@@ -20,5 +19,5 @@ void main(void)
 		}
 	}
 
-	puts("\n\nPROG2 ACABOU\n");
+	puts("\n\nPROG3 ACABOU\n");
 }

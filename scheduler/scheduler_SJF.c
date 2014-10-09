@@ -13,7 +13,7 @@ int *pids; // vetor com os pids dos processos a serem executados segundo a polit
 
 int t_ini,t_fim,turnaround;// variaveis para guardar o tempo
 
-int main(int argc, char** argv)
+/*int main(int argc, char** argv)
 {
 	char *Myargs[2];
 	Myargs[0]="process1";
@@ -27,7 +27,7 @@ int main(int argc, char** argv)
 	scheduler_SJF (time,Myargs,tam);
 
 	return 0;
-}
+}*/
 int scheduler_SJF (int *execTime,char **path, int tam)
 {
 	int i,j;// contadores
@@ -98,4 +98,5 @@ void ordena(int* pids, int* execTime,int tam)
 			}
 		}
 }
+
 
