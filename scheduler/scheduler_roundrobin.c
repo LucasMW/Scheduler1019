@@ -3,7 +3,7 @@
 #include <unistd.h>
 #include <signal.h>
 #define EVER ;;
-#define CPUTIME 2000  //Mileseconds
+#define CPUTIME 1000  //Mileseconds
 
 void filhoHandler (int sinal);
 void alarmHandler (int sinal);
@@ -96,7 +96,7 @@ int scheduler_RR (char **path, int tam)
 				continue;	
 			t_ini[pos] = (int)time(NULL);
 			kill(pids[pos],SIGCONT);
-			sleep(2);			
+			usleep(cpuTime);			
 			result = waitpid(pids[pos],&status,WNOHANG);
 			printf ("result e status %d %d\n",result,status);
 			if(result!=0)
@@ -105,7 +105,8 @@ int scheduler_RR (char **path, int tam)
 				procFim++;
 				pids[pos]=-1;
 			}			
-			alarm(2);			
+			ualarm(cpuTime,0);
+				/* equals to alarm in microseconds */			
 			//kill(pids[pos],SIGSTOP);		
 			
 			printf ("dentro do loop RR - %d\n",pos);
