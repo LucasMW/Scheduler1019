@@ -3,15 +3,17 @@
 #include <unistd.h>
 #include <signal.h>
 #define EVER ;;
-#define CPUTIME 1000  //Mileseconds
-
+#define CPUTIME 50  //Mileseconds
+#define ON 1
+#define OFF 0
+#define DEBUGMSGS OFF
 void filhoHandler (int sinal);
 void alarmHandler (int sinal);
 int scheduler_RR (char **path, int tam);
 
 int pos,procFim=0;// posiçao do processo corrente e o numero dos processo finalizados
 int *pids;
-int *t_ini,*t_fim,*turnaround;// variaveis para controle do tempo
+int *t_ini,*t_fim,*turnaround=0;// variaveis para controle do tempo
 int z;
 
 /*int main (void)
@@ -34,7 +36,7 @@ void filhoHandler (int sinal)
 
 void alarmHandler (int sinal)
 {
-	printf ("dentro do alarm");
+	if(DEBUGMSGS)printf ("dentro do alarm");
 	if(pids[pos] != -1)
 	{
 		kill(pids[pos],SIGSTOP);
@@ -60,7 +62,7 @@ int scheduler_RR (char **path, int tam)
 		
 		if(pids == NULL)
 		{
-			printf ("erro ao alocar - RR");
+			if(DEBUGMSGS)printf ("erro ao alocar - RR");
 			exit(1);
 			
 		}
@@ -98,7 +100,7 @@ int scheduler_RR (char **path, int tam)
 			kill(pids[pos],SIGCONT);
 			usleep(cpuTime);			
 			result = waitpid(pids[pos],&status,WNOHANG);
-			printf ("result e status %d %d\n",result,status);
+			if(DEBUGMSGS)printf ("result e status %d %d\n",result,status);
 			if(result!=0)
 			{
 				printf ("processo %d terminado\n",pos);
@@ -109,9 +111,9 @@ int scheduler_RR (char **path, int tam)
 				/* equals to alarm in microseconds */			
 			//kill(pids[pos],SIGSTOP);		
 			
-			printf ("dentro do loop RR - %d\n",pos);
-			t_fim[pos] = (int)time(NULL);
-			turnaround[pos] += (t_fim[pos]-t_ini[pos]);
+			if(DEBUGMSGS)printf ("dentro do loop RR - %d\n",pos);
+			//t_fim[pos] = (int)time(NULL);
+			turnaround[pos] += cpuTime;
 			
 		}
 	}
@@ -119,6 +121,6 @@ int scheduler_RR (char **path, int tam)
 	for(pos = 0 ; pos < tam ; pos++ )
 	{   
    		
-		printf ("turn around do processo %d é : %d\n",pos,turnaround[pos]);
+		printf ("turn around do processo %d é : %.3f segundos\n",pos,turnaround[pos]/1000000.0);
 	}
 }
