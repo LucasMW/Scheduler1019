@@ -127,7 +127,7 @@ void FileInterpreter(char* path)
 		
     }  
 	if(j)
-			printf("entry corrupted"); 
+			printf("entry corrupted\n"); 
 	prognames=(char**)malloc(sizeof(char*)*tam);
 	exectimes=(int*)malloc(sizeof(int)*tam);
 	printf("mode %d\n",mode);
@@ -162,6 +162,10 @@ void FileInterpreter(char* path)
 		{
 		prognames[i]=(char*)malloc(strlen(lines[i]+strlen("exec ")));
 		strcpy(prognames[i],lines[i]+strlen("exec "));
+		}
+		for(i=0;i<tam;i++)
+		{
+			printf("prog[%d]: %s\n",i,prognames[i]);
 		}
 		scheduler_RR(prognames,tam);
 			
