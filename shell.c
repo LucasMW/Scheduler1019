@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "scheduler/scheduler_SJF.h"
 #define DEFAULTFILELOCATION "entrada.txt"
 
 
@@ -151,6 +152,7 @@ void FileInterpreter(char* path)
 			printf("time[%d]: %d\n",i,exectimes[i]);
 		}
 		printf("CALL SJF\n");
+		scheduler_SJF (exectimes,prognames,tam);
 		break;
 		case 2:
 		break;
