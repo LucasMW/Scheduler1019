@@ -10,10 +10,11 @@
 static void filhoHandler (int sinal);
 static void alarmHandler (int sinal);
 int scheduler_RR (char **path, int tam);
-
+static int isFather (int *pids, int tam);
 static int pos,procFim=0;// posiçao do processo corrente e o numero dos processo finalizados
 static int *pids;
 static int *t_ini,*t_fim,*turnaround=0;// variaveis para controle do tempo
+turnaround[pos] += (t_fim[pos]-t_ini[pos]);
 static int z;
 
 /*int main (void)
@@ -84,43 +85,57 @@ int scheduler_RR (char **path, int tam)
 		kill(pids[i],SIGSTOP);
 				
 		
-	}
+	} //fim do for
 			
 	signal(SIGUSR1, filhoHandler);
 	signal(SIGALRM, alarmHandler);
 
-	
-	while(procFim < tam)// enquanto o numero de processos que ja acabaram < que o numero de processos nao terminados
+	if (isFather(pids,tam))
 	{
-		for(pos = 0 ; pos < tam ; pos++ )
+		while(procFim < tam)// enquanto o numero de processos que ja acabaram < que o numero de processos nao terminados
 		{
-			if (pids[pos] == -1) //Se o programa ja acabou, pulamos ele
-				continue;	
-			t_ini[pos] = (int)time(NULL);
-			kill(pids[pos],SIGCONT);
-			usleep(cpuTime);			
-			result = waitpid(pids[pos],&status,WNOHANG);
-			if(DEBUGMSGS)printf ("result e status %d %d\n",result,status);
-			if(result!=0)
+			for(pos = 0 ; pos < tam ; pos++ )
 			{
-				printf ("processo %d terminado\n",pos);
-				procFim++;
-				pids[pos]=-1;
-			}			
-			ualarm(cpuTime,0);
-				/* equals to alarm in microseconds */			
-			//kill(pids[pos],SIGSTOP);		
+				if (pids[pos] == -1) //Se o programa ja acabou, pulamos ele
+					continue;	
+				t_ini[pos] = (int)time(NULL);
+				kill(pids[pos],SIGCONT);
+				usleep(cpuTime);			
+				result = waitpid(pids[pos],&status,WNOHANG);
+				if(DEBUGMSGS)printf ("result e status %d %d\n",result,status);
+				if(result!=0)
+				{
+					printf ("processo %d terminado\n",pos);
+					procFim++;
+					pids[pos]=-1;
+				}			
+				ualarm(cpuTime,0);
+					/* equals to alarm in microseconds */			
+				//kill(pids[pos],SIGSTOP);		
 			
-			if(DEBUGMSGS)printf ("dentro do loop RR - %d\n",pos);
-			//t_fim[pos] = (int)time(NULL);
-			turnaround[pos] += cpuTime;
+				if(DEBUGMSGS)printf ("dentro do loop RR - %d\n",pos);
+				//t_fim[pos] = (int)time(NULL);
+				turnaround[pos] += cpuTime;
 			
-		}
-	}
+			}// fim do for
+		}//fim do while
+	}//fim do if pai
 
 	for(pos = 0 ; pos < tam ; pos++ )
 	{   
    		
 		printf ("turn around do processo %d é : %.3f segundos\n",pos,turnaround[pos]/1000000.0);
 	}
+}
+static int isFather (int *pids,int tam)
+{
+	int i;
+	for (i=0;i<tam;i++)
+	{	
+		if (pids[i]==0)
+		{
+			return 0;
+		}
+	}
+	return 1;
 }
