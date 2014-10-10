@@ -56,7 +56,7 @@ int scheduler_SJF (int *execTime,char **path, int tam)
 			exit(1);			
 		}
 		
-		//kill(pids[i],SIGSTOP);
+		kill(pids[i],SIGSTOP);
 	}
 	ordena(pids,execTime,tam);	// função auxiliar para ordenar os tempos dos processos do menor pra o maior tempo
 	
