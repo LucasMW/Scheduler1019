@@ -14,7 +14,6 @@ static int isFather (int *pids, int tam);
 static int pos,procFim=0;// posiçao do processo corrente e o numero dos processo finalizados
 static int *pids;
 static int *t_ini,*t_fim,*turnaround=0;// variaveis para controle do tempo
-turnaround[pos] += (t_fim[pos]-t_ini[pos]);
 static int z;
 
 /*int main (void)
@@ -115,7 +114,7 @@ int scheduler_RR (char **path, int tam)
 			
 				if(DEBUGMSGS)printf ("dentro do loop RR - %d\n",pos);
 				//t_fim[pos] = (int)time(NULL);
-				turnaround[pos] += cpuTime;
+				turnaround[pos]+= cpuTime;
 			
 			}// fim do for
 		}//fim do while

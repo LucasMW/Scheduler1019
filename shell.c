@@ -142,14 +142,25 @@ void FileInterpreter(char* path)
 			p=strstr(lines[i],"tempoexec=");
 			prognames[i]=(char*)malloc(strlen(lines[i]+strlen("exec ")));
 			
-			strncpy(prognames[i],lines[i]+strlen("exec "),p-(lines[i]+strlen("exec ")));
+			strncpy(prognames[i],lines[i]+strlen("exec "),(p-(lines[i]+strlen("exec "))-1)); //Elimina o espaço
 			exectimes[i]=atoi(p+strlen("tempoexec="));
 			
 			
 		}
 		for(i=0;i<tam;i++)
 		{
-			printf("prog[%d]: %s\n",i,prognames[i]);
+			printf("prog[%d]: %s\n%d\n",i,prognames[i],strlen(prognames[i]));
+			for(c=0,p=prognames[i];*p;p++,c++)
+			{      
+					printf("%d<",c);
+				if(isprint(*p))
+				  
+					printf("%c>",*p);
+				
+				else
+					printf("Detected\n");
+			}
+			printf("\n");
 		}
 		for(i=0;i<tam;i++)
 		{
@@ -164,7 +175,8 @@ void FileInterpreter(char* path)
 			p=strstr(lines[i],"prioridade=");
 			prognames[i]=(char*)malloc(strlen(lines[i]+strlen("exec ")));
 			
-			strncpy(prognames[i],lines[i]+strlen("exec "),p-(lines[i]+strlen("exec ")));
+			strncpy(prognames[i],lines[i]+strlen("exec "),(p-(lines[i]+strlen("exec "))-1)); //Elimina o espaço
+			
 			priorities[i]=atoi(p+strlen("prioridade="));
 			
 			
@@ -172,6 +184,7 @@ void FileInterpreter(char* path)
 		for(i=0;i<tam;i++)
 		{
 			printf("prog[%d]: %s\n",i,prognames[i]);
+			
 		}
 		for(i=0;i<tam;i++)
 		{

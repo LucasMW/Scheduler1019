@@ -12,7 +12,7 @@ static void ordena(int* pids, int* execTime,int tam);
 static int *pids; // vetor com os pids dos processos a serem executados segundo a politica SJF
 
 static int t_ini,t_fim,turnaround;// variaveis para guardar o tempo
-
+static int isFather (int *pids, int tam);
 /*int main(int argc, char** argv)
 {
 	char *Myargs[2];
@@ -49,32 +49,37 @@ int scheduler_SJF (int *execTime,char **path, int tam)
 		if(pids[i] == 0)// filho
 		{
 			//raise(SIGSTOP);
-			execl(path[i],path[i],NULL);
-			kill(pids[i],SIGSTOP);
-			sleep(1);			
+			printf("Executing %s\n",path[i]);
+			if(execl(path[i],path[i],NULL)==-1)
+			printf("SJF: Couldn't alloc Process\n");
+			
+			exit(1);			
 		}
-
+		
+		//kill(pids[i],SIGSTOP);
 	}
 	ordena(pids,execTime,tam);	// função auxiliar para ordenar os tempos dos processos do menor pra o maior tempo
 	
 	// começa o SJF de fato 
-	for (j=0;j<tam;j++)
+	if(isFather(pids,tam))
 	{
-		t_ini = (int)time(NULL);// gurda o tempo do inicio do processo 1
+		for (j=0;j<tam;j++)
+		{
+			t_ini = (int)time(NULL);// gurda o tempo do inicio do processo 1
 
-		printf("\nInicio do processo %d: %d\n",j,(int)time(NULL));// inicio do processo
-
-		kill(pids[j],SIGCONT);// inicia o processo com o menor tempo
-		waitpid(pids[j],NULL,0);//espera ele terminar
-
-		t_fim = (int)time(NULL);// gurda o tempo do fim do processo
-		printf("Fim do processo %d: %d\n",j,(int)time(NULL));
+			printf("\nInicio do processo %d: %d\n",j,(int)time(NULL));// inicio do processo
 		
-		turnaround = t_fim-t_ini;
-		printf ("turn around do processo %d é : %d\n",j,turnaround);
+			kill(pids[j],SIGCONT);// inicia o processo com o menor tempo
+			waitpid(pids[j],NULL,0);//espera ele terminar
+
+			t_fim = (int)time(NULL);// gurda o tempo do fim do processo
+			printf("Fim do processo %d: %d\n",j,(int)time(NULL));
+		
+			turnaround = t_fim-t_ini;
+			printf ("turn around do processo %d é : %d\n",j,turnaround);
+		}
+
 	}
-
-
 }
 
 // sort simples que ordena os pids e times em ordem crescente
@@ -100,4 +105,15 @@ static void ordena(int* pids, int* execTime,int tam)
 		}
 }
 
-
+static int isFather (int *pids,int tam)
+{
+	int i;
+	for (i=0;i<tam;i++)
+	{	
+		if (pids[i]==0)
+		{
+			return 0;
+		}
+	}
+	return 1;
+}
