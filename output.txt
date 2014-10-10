@@ -1,0 +1,62 @@
+
+
+PROG2 COMECOU
+
+EU	vez 0.000000
+EU	vez 10.000000
+EU	vez 20.000000
+EU	vez 30.000000
+EU	vez 40.000000
+EU	vez 50.000000
+EU	vez 60.000000
+
+
+PROG2 ACABOU
+
+
+
+PROG3 COMECOU
+
+
+
+PROG3 ACABOU
+
+inicio do processo 1
+Pedro
+Pedro
+Pedro
+Pedro
+Pedro
+Pedro
+Pedro
+Pedro
+Pedro
+termino do processo 1
+exec scheduler/process1
+
+strlen=24exec scheduler/process2
+
+strlen=24exec scheduler/process3
+
+strlen=243
+Linha0: exec scheduler/process1
+Linha1: exec scheduler/process2
+Linha2: exec scheduler/process3
+sd
+OK
+RR
+OK
+RR
+OK
+RR
+mode 3
+prog[0]: scheduler/process1
+prog[1]: scheduler/process2
+prog[2]: scheduler/process3
+processo 1 terminado
+processo 2 terminado
+processo 0 terminado
+turn around do processo 0 é : 29.300 segundos
+turn around do processo 1 é : 3.000 segundos
+turn around do processo 2 é : 4.450 segundos
+shd
