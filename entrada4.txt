@@ -1,3 +1,3 @@
 exec scheduler/process1 prioridade=4
-exec scheduler/cpuBound1 prioridade=3
+exec scheduler/process2 prioridade=3
 exec scheduler/process3 prioridade=2
