@@ -1,3 +1,5 @@
+// Grupo : Pedro Augusto (0520253) e Lucas Menezes (1310844)
+// SCHEDULER SJF
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -56,7 +58,7 @@ int scheduler_SJF (int *execTime,char **path, int tam)
 			exit(1);			
 		}
 		
-		//kill(pids[i],SIGSTOP);
+		kill(pids[i],SIGSTOP);
 	}
 	ordena(pids,execTime,tam);	// função auxiliar para ordenar os tempos dos processos do menor pra o maior tempo
 	
@@ -104,7 +106,7 @@ static void ordena(int* pids, int* execTime,int tam)
 			}
 		}
 }
-
+// Funcao que serve para descobrir se é o Pai que esta executando
 static int isFather (int *pids,int tam)
 {
 	int i;
