@@ -4,6 +4,7 @@
 #include <string.h>
 #include "scheduler/scheduler_SJF.h"
 #include "scheduler/scheduler_roundrobin.h"
+#include "scheduler/scheduler_priorities.h"
 #define DEFAULTFILELOCATION "entrada.txt"
 
 
@@ -60,6 +61,7 @@ void FileInterpreter(char* path)
 	char* filestr;
 	char ** prognames;
 	int * exectimes;
+	int * priorities;
 	char *p;
 	char c;
 	int i,tam,spaces,j;
@@ -130,6 +132,7 @@ void FileInterpreter(char* path)
 			printf("entry corrupted\n"); 
 	prognames=(char**)malloc(sizeof(char*)*tam);
 	exectimes=(int*)malloc(sizeof(int)*tam);
+	priorities=(int*)malloc(sizeof(int)*tam);
 	printf("mode %d\n",mode);
 	switch(mode)
 	{
@@ -156,6 +159,27 @@ void FileInterpreter(char* path)
 		scheduler_SJF(exectimes,prognames,tam);
 		break;
 		case 2:
+		for(i=0;i<tam;i++)
+		{
+			p=strstr(lines[i],"prioridade=");
+			prognames[i]=(char*)malloc(strlen(lines[i]+strlen("exec ")));
+			
+			strncpy(prognames[i],lines[i]+strlen("exec "),p-(lines[i]+strlen("exec ")));
+			priorities[i]=atoi(p+strlen("prioridade="));
+			
+			
+		}
+		for(i=0;i<tam;i++)
+		{
+			printf("prog[%d]: %s\n",i,prognames[i]);
+		}
+		for(i=0;i<tam;i++)
+		{
+			printf("time[%d]: %d\n",i,priorities[i]);
+		}
+		printf("CALL PL\n");
+		scheduler_PL(priorities,prognames,tam);
+			
 		break;
 		case 3:
 		for(i=0;i<tam;i++)

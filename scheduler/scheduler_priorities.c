@@ -6,14 +6,15 @@
 #define CPUTIME 50  //Mileseconds
 #define ON 1
 #define OFF 0
-#define DEBUGMSGS OFF
+#define DEBUGMSGS ON
 static void filhoHandler (int sinal);
 static void alarmHandler (int sinal);
-int scheduler_RR (char **path, int tam);
+
 
 static int pos,procFim=0;// posiçao do processo corrente e o numero dos processo finalizados
 static int *pids;
 static int *t_ini,*t_fim,*turnaround=0;// variaveis para controle do tempo
+
 static int z;
 
 /*int main (void)
@@ -43,7 +44,7 @@ static void alarmHandler (int sinal)
 	}
 }
 
-int scheduler_RR (char **path, int tam)
+int scheduler_PL (int* priorities, char **path, int tam)
 {
 	int status;
     int cpuTime= CPUTIME*1000; 
@@ -56,13 +57,14 @@ int scheduler_RR (char **path, int tam)
 		t_ini = (int*) malloc(tam*sizeof(int));
 		t_fim = (int*) malloc(tam*sizeof(int));
 		turnaround = (int*) malloc(tam*sizeof(int));
+		
 
 	for (i=0;i<tam;i++)
 	{
 		
 		if(pids == NULL)
 		{
-			printf ("erro ao alocar - RR");
+			if(DEBUGMSGS)printf ("erro ao alocar - PL");
 			exit(1);
 			
 		}

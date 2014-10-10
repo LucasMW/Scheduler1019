@@ -1,0 +1,3 @@
+exec scheduler/process1
+exec scheduler/cpuBound1
+exec scheduler/process3

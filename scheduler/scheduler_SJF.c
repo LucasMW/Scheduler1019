@@ -7,11 +7,11 @@
 #include <ctype.h>
  
  
-void ordena(int* pids, int* execTime,int tam);
+static void ordena(int* pids, int* execTime,int tam);
 
-int *pids; // vetor com os pids dos processos a serem executados segundo a politica SJF
+static int *pids; // vetor com os pids dos processos a serem executados segundo a politica SJF
 
-int t_ini,t_fim,turnaround;// variaveis para guardar o tempo
+static int t_ini,t_fim,turnaround;// variaveis para guardar o tempo
 
 /*int main(int argc, char** argv)
 {
@@ -35,6 +35,7 @@ int scheduler_SJF (int *execTime,char **path, int tam)
  
 	for (i=0;i<tam;i++)
 	{
+		
 		
 		if(pids == NULL)
 		{
@@ -77,7 +78,7 @@ int scheduler_SJF (int *execTime,char **path, int tam)
 }
 
 // sort simples que ordena os pids e times em ordem crescente
-void ordena(int* pids, int* execTime,int tam)
+static void ordena(int* pids, int* execTime,int tam)
 {
 	int i,temp,temp2,fim;
 		for (fim=tam-1; fim>0; fim--)
