@@ -1,3 +1,5 @@
+// Grupo : Pedro Augusto (0520253) e Lucas Menezes (1310844)
+// SCHEDULER ROUNDROBIN
 #include<stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -46,9 +48,8 @@ static void alarmHandler (int sinal)
 int scheduler_RR (char **path, int tam)
 {
 	int status;
-    int cpuTime= CPUTIME*1000; 
-    // ini da copia	
-    int i,j;// contadores
+	int cpuTime= CPUTIME*1000; 
+	int i,j;// contadores
 	int bol1;
 	int result;
 	
@@ -73,12 +74,6 @@ int scheduler_RR (char **path, int tam)
 		{	
 			if(DEBUGMSGS)printf ("entre o execv e o kill do processo %d\n",i);
 			execl(path[i],path[i],NULL);
-			
-			//kill(pids[i],SIGSTOP);
-			//kill(pids[i],SIGSTOP);
-			//bol1 = WIFSTOPPED(status);
-			//printf ("ifstopped %d\n",bol1);
-			//sleep(1);			
 			exit(1);
 		}
 		kill(pids[i],SIGSTOP);
@@ -126,6 +121,7 @@ int scheduler_RR (char **path, int tam)
 		printf ("turn around do processo %d é : %.3f segundos\n",pos,turnaround[pos]/1000000.0);
 	}
 }
+// funcao que serve para descobrir se quem está executando no momento é o pai
 static int isFather (int *pids,int tam)
 {
 	int i;

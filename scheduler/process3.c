@@ -1,3 +1,5 @@
+// Grupo : Pedro Augusto (0520253) e Lucas Menezes (1310844)
+// PROCESS 3
 #include <stdio.h>
 #include <math.h>
 

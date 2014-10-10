@@ -1,4 +1,5 @@
-
+// Grupo : Pedro Augusto (0520253) e Lucas Menezes (1310844)
+// SHELL
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>

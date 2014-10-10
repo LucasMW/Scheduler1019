@@ -1,3 +1,5 @@
+// Grupo : Pedro Augusto (0520253) e Lucas Menezes (1310844)
+// SCHEDULER POR PRIORIDADE
 #include<stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -47,9 +49,8 @@ static void alarmHandler (int sinal)
 int scheduler_PL (int* priorities, char **path, int tam)
 {
 	int status;
-    int cpuTime= CPUTIME*1000; 
-    // ini da copia	
-    int i,j;// contadores
+    	int cpuTime= CPUTIME*1000; 
+  	int i,j;// contadores
 	int bol1;
 	int result;
 	int currentPri;
