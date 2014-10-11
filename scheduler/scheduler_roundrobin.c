@@ -118,7 +118,7 @@ int scheduler_RR (char **path, int tam)
 	for(pos = 0 ; pos < tam ; pos++ )
 	{   
    		
-		printf ("turn around do processo %d é : %.3f segundos\n",pos,turnaround[pos]/1000000.0);
+		printf ("turnaround do processo %d é : %.3f segundos\n",pos,turnaround[pos]/1000000.0);
 	}
 }
 // funcao que serve para descobrir se quem está executando no momento é o pai

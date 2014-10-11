@@ -1,0 +1,17 @@
+leia-me
+
+Instruções de uso:
+
+./shell -interpreter {input.txt} >{log.txt}
+Onde: 
+input.txt é o nome do arquivo que contém os comandos de entrada
+Caso a entrada não seja especificada o padrão é entrada.txt
+Caso deseje-se redirecionar o log a um arquivo usar ">log.txt" no fim do comando. log.txt é o nome do arquivo de log a ser gerado. 
+
+Caso Deseje recompilar o projeto pode-se executar o compile.sh
+ou usar o mesmo comando que se encontra nesse arquivo diretamente pelo terminal.
+
+Caso Deseje executar os testes de uma só vez, executar o tests.sh
+Alerta: O processo ao todo demora mais de um minuto.
+
+

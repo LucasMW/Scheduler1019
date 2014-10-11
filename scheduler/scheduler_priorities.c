@@ -140,7 +140,7 @@ int scheduler_PL (int* priorities, char **path, int tam)
 	for(pos = 0 ; pos < tam ; pos++ )
 	{   
    		
-		printf ("turn around do processo %d é : %.3f segundos\n",pos,turnaround[pos]/1000000.0);
+		printf ("turnaround do processo %d é : %.3f segundos\n",pos,turnaround[pos]/1000000.0);
 	}
 }
 static int getMaximum(int* pri,int tam)
