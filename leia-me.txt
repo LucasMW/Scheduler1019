@@ -19,4 +19,6 @@ logRR.txt para o teste do roundrobin
 logSJF.txt para o teste do SJF
 logPL.txt para o teste das listas de prioridades
 
+Os módulos dos schedulers tem #defines com o fatia de CPU e se também um onde permite-se compilar ou não com as messagens de DEBUG
+Basta trocar entre ON e OFF conforme a preferência.
 

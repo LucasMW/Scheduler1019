@@ -6,6 +6,9 @@
 #include "scheduler/scheduler_SJF.h"
 #include "scheduler/scheduler_roundrobin.h"
 #include "scheduler/scheduler_priorities.h"
+#define ON 1
+#define OFF 0
+#define DEBUGMSGS OFF
 #define DEFAULTFILELOCATION "entrada.txt"
 
 
@@ -78,7 +81,7 @@ void FileInterpreter(char* path)
 	i=0;
 	while(fgets (stropr , 255 ,input) != NULL)
 	{	
-		printf("%s\nstrlen=%d",stropr,strlen(stropr));
+		if(DEBUGMSGS)printf("%s\nstrlen=%d",stropr,strlen(stropr));
 		i++;
 	}
 	tam=i;
@@ -95,33 +98,33 @@ void FileInterpreter(char* path)
 	printf("%d\n",tam);
 	for(i=0;i<tam;i++)
 	{	
-		printf("Linha%d: %s\n",i,lines[i]);
+		if(DEBUGMSGS)printf("Linha%d: %s\n",i,lines[i]);
     }   
-	printf("sd\n");
+	
      //fclose (input);
 
 	for(i=0,j=0;i<tam;i++)
 	{	
 		if(strncmp(lines[i],"exec",4)==0)
 		{	
-			printf("OK\n");
+			if(DEBUGMSGS)printf("OK\n");
 			if(strstr(lines[i],"tempoexec="))
-			{	printf("SJF\n");
+			{	if(DEBUGMSGS)printf("SJF\n");
 				mode=1;
 			}
 			else if (strstr(lines[i],"prioridade="))
-			{	printf("Prioridade\n");
+			{	if(DEBUGMSGS)printf("Prioridade\n");
 				mode=2;
 			}
 			else
-			{	printf("RR\n");
+			{	if(DEBUGMSGS)printf("RR\n");
 				mode=3;
 			}
 			
 		}
 		else
 		{
-			printf("Fail\n");
+			if(DEBUGMSGS)printf("Fail\n");
 			j++;
 		}
 		
@@ -134,7 +137,7 @@ void FileInterpreter(char* path)
 	prognames=(char**)malloc(sizeof(char*)*tam);
 	exectimes=(int*)malloc(sizeof(int)*tam);
 	priorities=(int*)malloc(sizeof(int)*tam);
-	printf("mode %d\n",mode);
+	if(DEBUGMSGS)printf("mode %d\n",mode);
 	switch(mode)
 	{
 		case 1:
@@ -150,24 +153,24 @@ void FileInterpreter(char* path)
 		}
 		for(i=0;i<tam;i++)
 		{
-			printf("prog[%d]: %s\n%d\n",i,prognames[i],strlen(prognames[i]));
+			if(DEBUGMSGS)printf("prog[%d]: %s\n%d\n",i,prognames[i],strlen(prognames[i]));
 			for(c=0,p=prognames[i];*p;p++,c++)
 			{      
-					printf("%d<",c);
+				if(DEBUGMSGS)printf("%d<",c);
 				if(isprint(*p))
 				  
-					printf("%c>",*p);
+					if(DEBUGMSGS)printf("%c>",*p);
 				
 				else
-					printf("Detected\n");
+					if(DEBUGMSGS)printf("Detected\n");
 			}
-			printf("\n");
+			if(DEBUGMSGS)printf("\n");
 		}
 		for(i=0;i<tam;i++)
 		{
-			printf("time[%d]: %d\n",i,exectimes[i]);
+			if(DEBUGMSGS)printf("time[%d]: %d\n",i,exectimes[i]);
 		}
-		printf("CALL SJF\n");
+		if(DEBUGMSGS)printf("CALL SJF\n");
 		scheduler_SJF(exectimes,prognames,tam);
 		break;
 		case 2:
@@ -184,14 +187,14 @@ void FileInterpreter(char* path)
 		}
 		for(i=0;i<tam;i++)
 		{
-			printf("prog[%d]: %s\n",i,prognames[i]);
+			if(DEBUGMSGS)printf("prog[%d]: %s\n",i,prognames[i]);
 			
 		}
 		for(i=0;i<tam;i++)
 		{
-			printf("time[%d]: %d\n",i,priorities[i]);
+			if(DEBUGMSGS)printf("time[%d]: %d\n",i,priorities[i]);
 		}
-		printf("CALL PL\n");
+		if(DEBUGMSGS)printf("CALL PL\n");
 		scheduler_PL(priorities,prognames,tam);
 			
 		break;
@@ -203,14 +206,14 @@ void FileInterpreter(char* path)
 		}
 		for(i=0;i<tam;i++)
 		{
-			printf("prog[%d]: %s\n",i,prognames[i]);
+			if(DEBUGMSGS)printf("prog[%d]: %s\n",i,prognames[i]);
 		}
 		scheduler_RR(prognames,tam);
 			
 		break;
 		
 	}	
-	printf("shd\n");
+	if(DEBUGMSGS)printf("shd\n");
 
 
 
