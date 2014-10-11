@@ -14,4 +14,9 @@ ou usar o mesmo comando que se encontra nesse arquivo diretamente pelo terminal.
 Caso Deseje executar os testes de uma só vez, executar o tests.sh
 Alerta: O processo ao todo demora mais de um minuto.
 
+Os logs serão gerados como 
+logRR.txt para o teste do roundrobin
+logSJF.txt para o teste do SJF
+logPL.txt para o teste das listas de prioridades
+
 
